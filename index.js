@@ -14,8 +14,6 @@
       const data = await d3.csv("https://flunky.github.io/cars2017.csv");
 
 
-
-
   d3.select('svg')
     .append('g').attr("transform", "translate(" + 50 + "," + 50 + ")")
     .selectAll('circle')
