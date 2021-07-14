@@ -1,6 +1,7 @@
 (function () {
   'use strict';
 
+  async function init() {
   const svg = d3.select("svg"),
               margin = 100,
               width = svg.attr("width") - margin,
@@ -10,8 +11,10 @@
     var x = d3.scaleLog().domain([10,150]).range ([0, 200]);
     var y = d3.scaleLog().domain([10,150]).range ([200,0]);
 
-     async function init() {
+
       const data = await d3.csv("https://flunky.github.io/cars2017.csv");
+
+
 
 
   d3.select('svg')
