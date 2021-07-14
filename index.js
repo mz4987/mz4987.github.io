@@ -10,7 +10,11 @@
     var x = d3.scaleLog().domain([10,150]).range ([0, 200]);
     var y = d3.scaleLog().domain([10,150]).range ([200,0]);
 
-    const data = d3.csv("https://flunky.github.io/cars2017.csv");
+     async function init() {
+      const data = await d3.csv("https://flunky.github.io/cars2017.csv");
+
+
+
 
   d3.select('svg')
     .append('g').attr("transform", "translate(" + 50 + "," + 50 + ")")
@@ -30,5 +34,6 @@
     var x_axis = d3.axisBottom(x).tickValues([10, 20, 50, 100])
                    .tickFormat(d3.format("~s"));
     d3.select("svg").append("g").attr("transform", "translate(" + 50 + "," +(height + 50)+ ")").call(x_axis);
+     }init();
 
 }());
