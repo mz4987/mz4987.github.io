@@ -1,27 +1,27 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>CS416 Project_2</title>
     <link rel ="stylesheet" href = "styles.css">
-</head>
-
-<body style = 'font-size:24pt'>
-<h1>Create a Narrative Visualization</h1>
-<h4>CS416 Project Create a Narrative Visualization</h4>
+  </head>
+  
+    <body style = 'font-size:24pt'>
+    <h1>Create a Narrative Visualization</h1>
+    <h4>CS416 Project Create a Narrative Visualization</h4>
     <ul style = 'font-size:12pt'>
-        <li > Dataset: Amazon Top 50 Bestselling Books 2009 - 2019 </li>
-        <li> Data source: https://www.kaggle.com/sootersaalu/amazon-top-50-bestselling-books-2009-2019?select=bestsellers+with+categories.csv </li>
+      <li > Dataset: Amazon Top 50 Bestselling Books 2009 - 2019 </li>
+      <li> Data source: https://www.kaggle.com/sootersaalu/amazon-top-50-bestselling-books-2009-2019?select=bestsellers+with+categories.csv </li>
     </ul>
-
+    
     <button onclick="init(url_1,url_2)">2009-2019</button>
     <button onclick="init(url_3,url_4)">Dataset 4</button>
     <svg width=900 height=600> </svg>
-</body>
+  </body>
+    
+    <style> circle {fill: lightblue; stroke: black;} </style>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+  
 
-<style> circle {fill: lightblue; stroke: black;} </style>
-<script src="https://d3js.org/d3.v6.min.js"></script>
 
-
-
-<script src="index.js"></script>
+  <script src="bundle.js"></script>
 </html>
