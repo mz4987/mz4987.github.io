@@ -7,18 +7,21 @@
 
 <body style = 'font-size:24pt'>
 <h1>Create a Narrative Visualization</h1>
-<h3>CS416 Project Create a Narrative Visualization</h3>
-<ul>
-    <li> Dataset </li>
-    <li> Data source </li>
-</ul>
-<svg width=300 height=300>
-</svg>
+<h4>CS416 Project Create a Narrative Visualization</h3>
+    <ul style = 'font-size:12pt'>
+        <li > Dataset: Amazon Top 50 Bestselling Books 2009 - 2019 </li>
+        <li> Data source: https://www.kaggle.com/sootersaalu/amazon-top-50-bestselling-books-2009-2019?select=bestsellers+with+categories.csv </li>
+    </ul>
+
+    <button onclick="init(url_1,url_2)">2009-2019</button>
+    <button onclick="init(url_3,url_4)">Dataset 4</button>
+    <svg width=900 height=600> </svg>
 </body>
+
 <style> circle {fill: lightblue; stroke: black;} </style>
 <script src="https://d3js.org/d3.v6.min.js"></script>
 
 
 
-<script src="index.js"></script>
+<script src="bundle.js"></script>
 </html>
