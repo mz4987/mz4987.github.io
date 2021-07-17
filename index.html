@@ -1,0 +1,155 @@
+<!DOCTYPE html><html><head>
+    <title>Fork of CS416 Project_2</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  
+    <body style="font-size:24pt">
+    <h1>Create a Narrative Visualization_copy</h1>
+    <h4>CS416 Project Create a Narrative Visualization</h4>
+    <ul style="font-size:12pt">
+      <li> Dataset: Amazon Top 50 Bestselling Books 2009 - 2019 </li>
+      <li> Data source: https://www.kaggle.com/sootersaalu/amazon-top-50-bestselling-books-2009-2019?select=bestsellers+with+categories.csv </li>
+    </ul>
+    
+    <button onclick="init(url_1,url_2)">2009-2019</button>
+    <button onclick="init(2009)">2009</button>
+    <button onclick="init(2010)">2010</button>
+    <button onclick="init(2011)">2011</button>
+    <button onclick="init(2012)">2012</button>
+    <button onclick="init(2013)">2013</button>
+    <button onclick="init(2014)">2014</button>
+    <button onclick="init(2015)">2015</button>
+    <button onclick="init(2016)">2016</button>
+    <button onclick="init(2017)">2017</button>
+    <button onclick="init(2018)">2018</button>
+    <button onclick="init(2019)">2019</button>
+  
+    <svg width="900" height="600"> </svg>
+    <div id="my_dataviz"> </div>
+  
+    
+    <style> circle {fill: lightblue; stroke: black;} </style>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+
+  <script>
+    
+  const svg = d3.select("svg"),
+            margin = 100,
+            width = svg.attr("width") - margin,
+            height = svg.attr("height") - margin
+  
+  async function init1(myYear) {
+        var x = d3.scaleBand()
+          .domain([2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019]).range ([0, width/2-15]);
+  var y = d3.scaleLinear()
+            .domain([4.0,4.8]).range ([200,0]);
+  var cols = d3.scaleLinear()
+          .domain([4.5,4.8]).range(['blue','RED']);
+  const data1 = await d3.csv('https://raw.githubusercontent.com/mz4987/mz4987.github.io/main/2009-2019');
+
+d3.select('svg')
+  .append('g').attr("transform", "translate(" + 50 + "," + 50 + ")")
+  .selectAll('rect')
+  .data(data1)
+  .enter()
+  .append("rect")
+  .attr("x", function(d) { return x(d.Year); })
+  .attr("y", function(d) { return y(d.User_Rating); })
+  .attr("width", x.bandwidth()-2)
+  .attr("height", function(d) { return height - 300- y(d.User_Rating); })
+  .style("fill", function(d,i) { return cols(d.User_Rating); });
+
+  var y_axis = d3.axisLeft(y).tickValues([4.2,4.4,4.5,4.6,4.8]);
+  d3.select("svg").append("g").attr("transform", "translate(" + 50 + "," + 50 + ")").call(y_axis);
+
+  var x_axis = d3.axisBottom(x);
+  d3.select("svg").append("g").attr("transform", "translate(" + 50 + "," +(height - 250)+ ")").call(x_axis);
+
+
+  var x = d3.scaleBand()
+             .domain([2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019]).range ([width/2+15, width]);
+  var y = d3.scaleLinear()
+            .domain([5.0,16.0]).range ([200,0]);
+  var cols = d3.scaleLinear()
+          .domain([10.0,20.0]).range(['blue','RED']);
+
+
+d3.select('svg')
+  .append('g').attr("transform", "translate(" + (50)+"," + 50 + ")")
+  .selectAll('rect')
+  .data(data1)
+  .enter()
+  .append("rect")
+  .attr("x", function(d) { return x(d.Year); })
+  .attr("y", function(d) { return y(d.Price); })
+  .attr("width", x.bandwidth()-2)
+  .attr("height", function(d) { return height - 300- y(d.Price); })
+  .style("fill", function(d,i) { return cols(d.Price); });
+
+  var y_axis = d3.axisLeft(y).tickValues([6,8,10,12,14,16]);
+  d3.select("svg").append("g").attr("transform", "translate(" + (50 + width/2+15)+ "," + 50 + ")").call(y_axis);
+
+  var x_axis = d3.axisBottom(x);
+  d3.select("svg").append("g").attr("transform", "translate(" + 50 + "," +(height - 250)+ ")").call(x_axis);
+ 
+  };
+
+
+
+async function init2(theYear){   
+  const data2 = await d3.csv('https://raw.githubusercontent.com/mz4987/mz4987.github.io/main/bestsellers%20with%20categories.csv');
+  var x = d3.scaleLog().domain([200,90000]).range ([0, width]);
+  var y = d3.scaleLinear().domain([3.0,5.0]).range ([200,0]);
+  var cols = d3.scaleLinear()
+          .domain([5.0,30.0,60.0]).range(['blue','orange','red']);
+
+   var tooltip = d3.select("#my_dataviz")
+                   .append("div")
+                   .attr("id", "tooltip")
+                   .attr('style', 'position: absolute; opacity: 0;');
+
+
+  d3.select('svg')
+  .append('g').attr("transform", "translate(" + 50 + "," + 350 + ")")
+  .selectAll('circle')
+  .data(data2.filter(function(d,i){return d.Year==theYear}))
+  .enter()
+  .append('circle')
+    .attr('cx', function(d,i) {  return x(d.Reviews);})
+    .attr('cy', function(d,i) { return y(d.User_Rating); })
+    .attr('r', function(d,i) { return d.Price/10+5; })
+    .style("fill", function(d,i) { return cols(d.Price); })
+    .style("opacity", 0.7)
+    .style("stroke", "black")
+    .on("mouseout", function (d) {
+                                 d3.select(this)
+                                   .style("stroke-width", "1px")
+                                   .style("stroke", "#888888");
+
+                                 tooltip.selectAll('.data').remove();})
+
+   .on("mouseover", function(d) {
+                d3.select(this)
+                 .style("stroke-width", "3px")
+                 .style("stroke", "#000");
+
+                tooltip.style("opacity", "1")
+                       .style("display", "block")
+                       .append("div")
+                       .attr("class", "data")
+                       .html(d.name)
+                       .transition()  //Opacity transition when the tooltip appears
+                       .duration(500);});
+    
+
+  var y_axis = d3.axisLeft(y).tickValues([3.0,3.2,3.4,3.6,3.8,4.0, 4.2, 4.4, 4.6, 4.8,5.0]);
+  d3.select("svg").append("g").attr("transform", "translate(" + 50 + "," + 350 + ")").call(y_axis);
+
+  var x_axis = d3.axisBottom(x);
+  d3.select("svg").append("g").attr("transform", "translate(" + 50 + "," +(height+50)+ ")").call(x_axis);
+
+   };
+  
+  </script>
+
+<script src="bundle.js"></script></body></html>
