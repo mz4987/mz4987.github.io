@@ -1,11 +1,11 @@
 <!DOCTYPE html><html><head>
-    <title>Fork of Fork of Fork of Fork of CS416 Project_2</title>
+    <title>Fork of Fork of Fork of Fork of Fork of CS416 Project_2</title>
     <link rel="stylesheet" href="styles.css">
   </head>
   
     <body style="font-size:24pt">
-    <h1>Create a Narrative Visualization_copy</h1>
-    <h4>CS416 Project Create a Narrative Visualization</h4>
+    <h1>CS416 Project - Create a Narrative Visualization</h1>
+    <h4>Amazon Top 50 Bestselling Books 2009 - 2019</h4>
     <ul style="font-size:12pt">
       <li> Dataset: Amazon Top 50 Bestselling Books 2009 - 2019 </li>
       <li> Data source: https://www.kaggle.com/sootersaalu/amazon-top-50-bestselling-books-2009-2019?select=bestsellers+with+categories.csv </li>
@@ -36,7 +36,7 @@
             height = svg.attr("height") - margin
 
 
-async function init1(myYear) {
+async function init1(theYear) {
 
    var x = d3.scaleBand()    .domain([2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019]).range ([0, width/2-15]);
    var y = d3.scaleLinear().domain([4.0,4.8]).range ([200,15]);
@@ -74,12 +74,14 @@ d3.select('svg')
 
 d3.select('svg')
   .append("text")
-    .attr("x", 10)
-    .attr("y", 20)
-    .html("Graphs below indicating the average user rating and price from 2009 to 2019").style("font-size", "15px").attr("alignment-baseline","middle")
+  .attr("class", "tittle")
+    .attr("x", width/4)
+    .attr("y", 25)
+    .html("Amazon Top 50 Bestselling Books average user rating and price from 2009 to 2019").style("font-size", "15px").attr("alignment-baseline","middle")
+  
  d3.select('svg')
   .append("text")
-    .attr("x", 10)
+    .attr("x", width/2-10)
     .attr("y", 40)
     .html('* Click bottom above to review detail').style("font-size", "10px").attr("alignment-baseline","middle")
   
@@ -100,6 +102,21 @@ d3.select('svg')
 
   var x_axis = d3.axisBottom(x);
   d3.select("svg").append("g").attr("transform", "translate(" + 50 + "," +(height - 250)+ ")").call(x_axis);
+  
+  
+  d3.select('svg').append('text')
+           .attr("class", "event-text")
+           .data(data1.filter(function(d){ return d.Year==theYear;}))
+           .html( function(d) {return 'The average rating of '+d.Year + ' Amazon Top 50 Books is ' + parseFloat(d.User_Rating).toFixed(2)+'/5.0.';})
+           .attr("x", 45)
+          .attr("y", 285);
+   
+  d3.select('svg').append('text')
+           .attr("class", "event-text")
+           .data(data1.filter(function(d){ return d.Year==theYear;}))
+           .html( function(d) {return 'The average price of '+d.Year + ' Amazon Top 50 Books is ' + parseFloat(d.Price).toFixed(2)+'USD.';})
+           .attr("x", 470)
+           .attr("y", 285);
  
    };
 
@@ -119,27 +136,8 @@ d3.select('svg')
                    .style("background-color", "white")
                    .style('position', 'absolute');
 
-
-    var mouseover = function(d) {
-    tooltip
-      .style("opacity", 1)
-  };
-
-    var mousemove = function(d) {
-    tooltip
-      .html(d.Name  + d.Author )
-
-  };
-
-  // A function that change this tooltip when the leaves a point: just need to set opacity to 0 again
-  var mouseleave = function(d) {
-    tooltip
-      .transition()
-      .duration(200)
-      .style("opacity", 0);
-  };
-
   d3.selectAll("svg > *").remove();
+    
   d3.select('svg')
   .append('g').attr("transform", "translate(" + 50 + "," + 350 + ")")
   .selectAll('circle')
@@ -174,11 +172,18 @@ d3.select('svg')
   var x_axis = d3.axisBottom(x);
   d3.select("svg").append("g").attr("transform", "translate(" + 50 + "," +(height+50)+ ")").call(x_axis);
     
- init1(2020);
+  d3.select('svg')
+  .append("text")
+  .attr("class", "tittle")
+    .attr("x", width/3)
+    .attr("y", 590)
+    .html("Amazon Top 50 Bestselling Books User_Rating VS	Reviews").style("font-size", "15px").attr("alignment-baseline","middle")
+    
+ init1(theYear);
 
    };
-  init2(2010);
+  init2(2020);
     </script>
   
-    
-    <script src="bundle.js"></script></body></html>
+    </body>
+    </html>
