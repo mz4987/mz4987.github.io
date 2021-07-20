@@ -1,0 +1,62 @@
+
+.bubbles {
+  stroke-width: 4px;
+  stroke: grey;
+  opacity: 0.9
+}
+
+
+
+
+.tooltip {
+  position: absolute;
+  text-align: center;
+  font-size:12pt;	
+    width: 400px;					
+    height: 80px;						
+    background: steelblue;	
+    pointer-events: none;
+    border: solid;
+    border-width: 2px;
+    border-radius:10px;
+}
+
+.event-text {
+    fill: black;
+    font-family: sans-serif;
+    font-size:10pt;
+    width: 400px;
+    height: 28px;
+    border: solid;
+}
+
+.tittle{
+    fill: black;
+    text-align: center;
+    font-family: sans-serif;
+    font-size:12pt;
+    width: 400px;
+    height: 28px;
+    border: solid;
+}
+
+.notes{
+    fill: black;
+    text-align: center;
+    font-family: sans-serif;
+    font-size:8pt;
+    width: 400px;
+    height: 28px;
+    border: solid;
+}
+
+
+.page{
+    fill: black;
+    text-align: center;
+    font-family: sans-serif;
+    font-size:20pt;
+    width: 400px;
+    height: 28px;
+    border: solid;
+}
