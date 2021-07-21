@@ -217,13 +217,13 @@ async function init2(theYear){
   .attr("class", "tittle")
     .attr("x", width/3)
     .attr("y", 570)
-    .html("Amazon Top 50 Bestselling Books User_Rating VS	Reviews");
+    .html("Amazon Top 50 Bestselling Books User_Rating VS Reviews");
     
     d3.select('svg').append("text")
     .attr("class", "notes")
-    .attr("x", width/2-10)
+    .attr("x", width/2-70)
     .attr("y", 590)
-    .html('* Mouseover to review detail');
+    .html('* Mouseover to see detail, # of reviews shown as logarithmic scales');
   
   
   if (theYear <2020) {
