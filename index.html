@@ -151,7 +151,7 @@ async function init2(theYear){
   const data2 = await d3.csv('https://raw.githubusercontent.com/mz4987/mz4987.github.io/main/bestsellers%20with%20categories.csv');
   var x = d3.scaleLog().domain([200,90000]).range ([0, width]);
   var y = d3.scaleLinear().domain([3.2,5.0]).range ([180,10]);
-  var myColor = d3.scaleLinear().domain([5.0,20,50.0])
+  var myColor = d3.scaleLinear().domain([5.0,25,55.0])
     .range([ "#440154ff", "#21908dff", "red"]);
 
    var ttip = d3.select("#my_dataviz")
@@ -185,7 +185,7 @@ d3.select('svg')
   .style('opacity', .8)
   .attr('cx', function(d,i) {  return x(d.Reviews);})
   .attr('cy', function(d,i) { return y(d.User_Rating); })
-  .attr('r', function(d,i) { return d.Price/10+7; })
+  .attr('r', function(d,i) { return d.Price/10+6; })
   .style("fill", function(d,i) { return myColor(d.Price); })
   .on('mouseover', function(e, d) {
            d3.select(this)
