@@ -1,0 +1,284 @@
+<!DOCTYPE html><html><head>
+    <title>Fork of Fork of Fork of Fork of Fork of Fork of CS416 Project_2</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  
+    <body style="font-size:24pt">
+    <h1>CS416 Project - Create a Narrative Visualization</h1>
+    <h4>Amazon Top 50 Bestselling Books 2009 - 2019</h4>
+    <ul style="font-size:12pt">
+      <li> Dataset: Amazon Top 50 Bestselling Books 2009 - 2019 </li>
+      <li> Data source: https://www.kaggle.com/sootersaalu/amazon-top-50-bestselling-books-2009-2019?select=bestsellers+with+categories.csv </li>
+    </ul>
+    
+    <button onclick="init2(2020)">2009-2019</button>
+    <button onclick="next()">Next</button>
+    <button onclick="init2(2009)">2009</button>
+    <button onclick="init2(2010)">2010</button>
+    <button onclick="init2(2011)">2011</button>
+    <button onclick="init2(2012)">2012</button>
+    <button onclick="init2(2013)">2013</button>
+    <button onclick="init2(2014)">2014</button>
+    <button onclick="init2(2015)">2015</button>
+    <button onclick="init2(2016)">2016</button>
+    <button onclick="init2(2017)">2017</button>
+    <button onclick="init2(2018)">2018</button>
+    <button onclick="init2(2019)">2019</button>
+    
+    <svg width="900" height="600"> </svg>
+    <div id="my_dataviz"> </div>
+  
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    
+      
+    <script>
+      var yourGlobalVariable=2020;
+      
+      const svg = d3.select("svg"),
+            margin = 100,
+            width = svg.attr("width") - margin,
+            height = svg.attr("height") - margin
+
+
+async function init1(theYear) {
+
+   var x = d3.scaleBand()    .domain([2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019]).range ([0, width/2-15]);
+   var y = d3.scaleLinear().domain([4.0,4.8]).range ([200,15]);
+   var cols = d3.scaleLinear()
+           .domain([4.5,4.6,4.7,4.9]).range(['blue','white','pink','red']);
+  
+  const data1 = await d3.csv('https://raw.githubusercontent.com/mz4987/mz4987.github.io/main/2009-2019');
+
+d3.select('svg')
+  .append('g').attr("transform", "translate(" + 50 + "," + 50 + ")")
+  .selectAll('rect')
+  .data(data1)
+  .enter()
+  .append("rect")
+  .attr("x", function(d) { return x(d.Year); })
+  .attr("y", function(d) { return y(d.User_Rating); })
+  .attr("width", x.bandwidth()-2)
+  .attr("height", function(d) { return height - 300- y(d.User_Rating); })
+  .style("fill", function(d,i) { return cols(d.User_Rating); })
+  .attr("width", x.bandwidth()-4)
+  .attr("stroke", 'black')
+  .attr('stroke-width', function(d){ if (d.Year == theYear) {return '5px';}return '1px';});
+
+  var y_axis = d3.axisLeft(y).tickValues([4.2,4.4,4.5,4.6,4.8]);
+  d3.select("svg").append("g").attr("transform", "translate(" + 50 + "," + 50 + ")").call(y_axis);
+
+  var x_axis = d3.axisBottom(x);
+  d3.select("svg").append("g").attr("transform", "translate(" + 50 + "," +(height - 250)+ ")").call(x_axis);
+
+
+  var x = d3.scaleBand()
+          .domain([2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019]).range ([width/2+15, width]);
+  var y = d3.scaleLinear().domain([5.0,16.0]).range ([200,15]);
+  var cols = d3.scaleLinear().domain([10,15,20]).range(['blue','pink','red']);
+
+
+d3.select('svg')
+  .append("text")
+  .attr("class", "tittle")
+    .attr("x", width/4)
+    .attr("y", 25)
+    .html("Amazon Top 50 Bestselling Books average user rating and price from 2009 to 2019");
+  
+ d3.select('svg')
+   .append("text").attr("class", "notes")
+   .attr("x", width/2-10)
+   .attr("y", 40)
+   .html('* Click bottom above to review detail');
+  
+d3.select('svg').append('g')
+  .attr("transform", "translate(" + (50)+"," + 50 + ")")
+  .selectAll('rect')
+  .data(data1)
+  .enter()
+  .append("rect")
+  .attr("x", function(d) { return x(d.Year); })
+  .attr("y", function(d) { return y(d.Price); })
+  .attr("width", x.bandwidth()-4)
+  .attr("stroke",'black')
+  .attr('stroke-width', function(d){ if (d.Year == theYear) {return '5px';}return '1px';})
+  .attr("height", function(d) { return height - 300- y(d.Price); })
+  .style("fill", function(d,i) { return cols(d.Price); });
+
+  var y_axis = d3.axisLeft(y).tickValues([6,8,10,12,14,16]);
+  d3.select("svg").append("g")
+    .attr("transform", "translate(" + (50 + width/2+15)+ "," + 50 + ")").call(y_axis);
+
+  var x_axis = d3.axisBottom(x);
+  d3.select("svg").append("g")
+    .attr("transform", "translate(" + 50 + "," +(height - 250)+ ")").call(x_axis);
+  
+
+
+   d3.select('svg').append('text')
+           .attr("class", "event-text")
+           .html( 'Amazon Top 50 Bestselling Books User Rating')
+           .attr("x", 50)
+          .attr("y", 285);
+  
+  d3.select('svg').append('text')
+    .attr("class", "event-text")
+           .html( 'Amazon Top 50 Bestselling Books Price')
+          .attr("x", 470)
+          .attr("y", 285);
+  
+  if (theYear<2020){
+        d3.select('svg').append('text')
+          .attr("class", "event-text")
+          .data(data1.filter(function(d){ return d.Year==theYear;}))
+          .html( function(d) {return 'The ' +theYear+ ' average user rating: '+ parseFloat(d.User_Rating).toFixed(1)+'/5.0';})
+          .attr("x", 50).attr("y", 303);
+
+   
+        d3.select('svg').append('text')
+          .attr("class", "event-text")
+          .data(data1.filter(function(d){ return d.Year==theYear;}))
+          .html( function(d) {return 'The ' +theYear+ ' average price : ' + parseFloat(d.Price).toFixed(1)+' USD';})
+          .attr("x", 470).attr("y", 303);
+      };
+  
+  
+};
+
+
+      
+async function init2(theYear){
+  
+  const data2 = await d3.csv('https://raw.githubusercontent.com/mz4987/mz4987.github.io/main/bestsellers%20with%20categories.csv');
+  var x = d3.scaleLog().domain([200,90000]).range ([0, width]);
+  var y = d3.scaleLinear().domain([3.2,5.0]).range ([180,10]);
+  var myColor = d3.scaleLinear().domain([5.0,20,50.0])
+    .range([ "#440154ff", "#21908dff", "red"]);
+
+   var ttip = d3.select("#my_dataviz")
+                   .append("div")
+                   .style("opacity", 0)
+                   .attr("class", "tooltip")
+                   .style("background-color", "white")
+                   .style('position', 'absolute');
+  
+
+  d3.selectAll("circle").remove()
+    .transition()
+    .duration(3000);
+   
+  d3.selectAll("text").remove()
+    .transition()
+    .duration(3000);
+  d3.selectAll("rect").remove()
+    .transition()
+    .duration(3000);
+    
+d3.select('svg')
+  .append('g').attr("transform", "translate(" + 50 + "," + 350 + ")")
+  .selectAll('circle')
+  .data(data2.filter(function(d,i){if (theYear ==2020){return d.Year<theYear; }
+                                   return d.Year==theYear;}))
+  .enter()
+  .append('circle')
+  .attr('stroke-width', '1')
+  .attr("stroke", "grey")
+  .style('opacity', .8)
+  .attr('cx', function(d,i) {  return x(d.Reviews);})
+  .attr('cy', function(d,i) { return y(d.User_Rating); })
+  .attr('r', function(d,i) { return d.Price/10+7; })
+  .style("fill", function(d,i) { return myColor(d.Price); })
+  .on('mouseover', function(e, d) {
+           d3.select(this)
+             .attr('stroke-width', '2')
+             .attr("stroke", "black");
+          ttip.transition()
+              .duration(500)
+              .style('opacity', .9);
+          ttip.html(d.Name + '<br>' + 'Author: '+ d.Author+ '<br>' + 'Price (USD): '+ d.Price)
+              .style('left', (event.pageX) + 'px')
+              .style('top', (event.pageY - 30) +'px')
+              .attr('data-year', d.Year);
+        }).on('mouseout', function(d) {
+           d3.select(this).attr('stroke-width', '0');
+           ttip.transition()
+               .duration(300)
+               .style('opacity', 0);
+        });
+
+
+  var y_axis = d3.axisLeft(y).tickValues([3.2,3.4,3.6,3.8,4.0, 4.2, 4.4, 4.6, 4.8,5.0]);
+  d3.select("svg").append("g").attr("transform", "translate(" + 50 + "," + 350 + ")").call(y_axis);
+
+  var x_axis = d3.axisBottom(x);
+  d3.select("svg").append("g").attr("transform", "translate(" + 50 + "," +(height+30)+ ")").call(x_axis);
+    
+  d3.select('svg')
+    .append("text")
+    .attr("class", "tittle")
+    .attr("x", width/3).attr("y", 570)
+    .html("Amazon Top 50 Bestselling Books User_Rating VS	Reviews");
+    
+    d3.select('svg').append("text")
+    .attr("class", "notes")
+    .attr("x", width/2-70).attr("y", 590)
+    .html('* Mouseover to see detail, # of reviews shown as logarithmic scales');
+  
+  
+  if (theYear <2020) {
+  var data_year = data2.filter(function(d){ return d.Year==theYear;})
+  
+  var max_rate = Math.max.apply(Math, data_year.map(function(d) { return d.User_Rating; }));
+  var min_rate = Math.min.apply(Math, data_year.map(function(d) { return d.User_Rating; }));
+
+    
+    
+  var max_price = Math.max.apply(Math, data_year.map(function(d) { return d.Price; }));
+  var min_price = Math.min.apply(Math, data_year.map(function(d) { return d.Price; }));
+  
+    d3.select('svg').append('text')
+      .attr("class", "event-text")
+      .html('The highest rating of '+ theYear +' is '+ max_rate+'/5.0')
+      .attr("x", 50).attr("y", 318);
+  
+   d3.select('svg').append('text')
+     .attr("class", "event-text")
+     .html( 'The lowest rating of '+ theYear +' is '+  min_rate+'/5.0')
+     .attr("x", 50).attr("y", 333);
+    
+    
+    d3.select('svg').append('text')
+      .attr("class", "event-text")
+      .html('The highest price of '+ theYear +' is '+ max_price +' USD')
+      .attr("x", 470).attr("y", 318);
+  
+   d3.select('svg').append('text')
+     .attr("class", "event-text")
+     .html('The lowest price of '+ theYear +' is '+ min_price+ ' USD')
+     .attr("x", 470).attr("y", 333);
+    
+  };
+      
+init1(theYear);
+yourGlobalVariable =theYear;
+
+};
+      
+  
+function next(){
+
+  if (yourGlobalVariable >= 2020){
+      init2(2009)
+  };
+
+    
+  if (window.yourGlobalVariable < 2020){
+      yourGlobalVariable=yourGlobalVariable+1
+      init2(yourGlobalVariable)
+  };
+  };
+      
+  init2(2020);
+    </script>
+  
+    </body>
+    </html>
